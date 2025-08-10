@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(SARS)-Pelajar</title>
+
+    <!-- Font Awesome untuk ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="profile-container">
+            <label for="profileUpload">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="Gambar Profil" class="profile-pic" id="profilePic">
+            </label>
+            <input type="file" id="profileUpload" accept="image/*">
+            <h3 id="userName">Nama Pengguna</h3>
+        </div>
+        <a href="#">Informasi Sekolah</a>
+        <a href="#">Informasi Kelas</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="pilihan-container">
+            <div class="card">
+                <a href="aduan.html">
+                    <i class="fas fa-bullhorn card-icon"></i>
+                    <h1>Aduan</h1>
+                    <p>Laporkan sebarang insiden atau masalah dengan selamat dan sulit. Suara anda penting untuk tindakan kami.</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="kaunseling.html">
+                    <i class="fas fa-hand-holding-heart card-icon"></i>
+                    <h1>Kaunseling</h1>
+                    <p>Perlukan sokongan atau seseorang untuk berbual? Jadualkan sesi sulit bersama kaunselor sekolah anda.</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="(SARS)-Cadangan Pelajar.html">
+                    <i class="fas fa-lightbulb card-icon"></i>
+                    <h1>Cadangan</h1>
+                    <p>Ada idea hebat untuk menambah baik sekolah? Kongsikan cadangan membina anda untuk manfaat bersama.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePic = document.getElementById('profilePic');
+            const profileUpload = document.getElementById('profileUpload');
+            const userNameElement = document.getElementById('userName');
+
+            // Muat naik nama dan sekolah dari localStorage
+            const savedName = localStorage.getItem('nama') || 'Pelajar';
+            const savedSekolah = localStorage.getItem('sekolah') || '';
+            userNameElement.textContent = savedName;
+
+            // Cipta kunci unik untuk setiap pengguna berdasarkan nama dan sekolah
+            // Ini memastikan setiap pengguna mempunyai gambar profil mereka sendiri
+            const userKey = `profileImage_${savedName.replace(/\s/g, '_').toLowerCase()}_${savedSekolah.replace(/\s/g, '_').toLowerCase()}`;
+
+            // Fungsi untuk memuat naik dan menyimpan gambar
+            function setupProfilePicture() {
+                // Muat naik gambar profil dari localStorage menggunakan kunci unik
+                const savedImage = localStorage.getItem(userKey);
+                if (savedImage) {
+                    profilePic.src = savedImage;
+                }
+
+                // Apabila gambar profil diklik, buka pilihan fail
+                profileUpload.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            profilePic.src = e.target.result;
+                            // Simpan gambar menggunakan kunci unik
+                            localStorage.setItem(userKey, e.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            setupProfilePicture();
+        });
+    </script>
+
+     <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background-color: #ffdfb9;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            height: 100vh;
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0; /* sentiasa kelihatan */
+            background-color: #a4193d;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .profile-container {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+        .profile-pic:hover {
+            opacity: 0.8;
+        }
+
+        #profileUpload {
+            display: none;
+        }
+
+        #userName {
+            margin: 10px 0 0 0;
+            font-weight: 600;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        /*umtuk hitam2 bila sidebar dipilih*/
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* Toggle button styling */
+
+        /* Content area */
+        .content {
+            padding: 20px;
+            margin-left: 220px; /* Anjakkan kandungan untuk beri ruang pada sidebar */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transition: margin-left 0.3s ease;
+
+        }
+
+        .pilihan-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+            justify-content: center;
+            gap: 30px;
+            padding-top: 40px;
+            max-width: 1200px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card-icon {
+            font-size: 60px;
+            color: #a4193d;
+            margin-bottom: 15px;
+        }
+
+        .card h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+    </style>
+
+</body>
+</html>

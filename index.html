@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistem Aduan Rakyat Sekolah (SARS)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <!-- Font Awesome untuk ikon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px; /* Added some padding */
+      font-family: Arial, sans-serif;
+      display: flex;
+      background: #ffb7b2;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh; /* Ensure it takes full height */
+      box-sizing: border-box; /* Better box model */
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 40px;
+      margin-top: 20px;
+      margin-bottom: 20px; /* Added bottom margin */
+      color: #3b3426;
+      text-align: center; /* Center the title */
+    }
+
+    .form-box {
+      padding: 20px 30px; /* Adjusted padding */
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Softened shadow */
+      width: 100%; /* Responsive width */
+      max-width: 500px; /* Max width for larger screens */
+      margin-top: 20px;
+      background: #fadadd;
+      color: black;
+    }
+    
+    .form-group {
+        margin-bottom: 15px; /* Space out form elements */
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #3b3426;
+    }
+
+    .password-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    #password {
+        padding-right: 45px; /* Make space for the icon */
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        bottom: 1px;
+        width: 40px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #666;
+        font-size: 16px;
+    }
+
+    input, select {
+      width: 100%; /* Use 100% for better responsiveness inside the padded container */
+      padding: 12px; /* Increased padding */
+      font-size: 16px;
+      border: 1px solid #ddd; /* Added a subtle border */
+      border-radius: 6px;
+      box-sizing: border-box; /* Include padding in width calculation */
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: #2c7be5;
+        box-shadow: 0 0 0 2px rgba(44, 123, 229, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px; /* Adjusted margin */
+      background-color: #2c7be5;
+      color: white;
+      border: none;
+      font-size: 16px;
+      font-weight: bold; /* Make text bolder */
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out; /* Smooth transition */
+    }
+
+    button:hover {
+      background-color: #1a5edb;
+    }
+
+    .register-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .register-link a {
+        color: #2c7be5;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .register-link a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- 🖋 Title -->
+  <h1>Selamat Datang ke SARS</h1>
+
+  <!-- 📦 Form Box -->
+  <div class="form-box">
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="nama">Nama Penuh</label>
+            <input type="text" id="nama" placeholder="Contoh: Afiq" required>
+        </div>
+        <div class="form-group">
+            <label for="sekolah">Nama Sekolah</label>
+            <input type="text" id="sekolah" placeholder="Contoh: SMJK Shan Tao" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Kata Laluan</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Masukkan kata laluan" required>
+                <button type="button" class="toggle-password" id="togglePassword" aria-label="Tunjuk/Sembunyi kata laluan"><i class="fa fa-eye"></i></button>
+            </div>
+        </div>
+        <button type="submit">Teruskan</button>
+    </form>
+    <p class="register-link">Belum ada akaun? <a href="(SARS)-Register.html">Daftar di sini</a></p>
+  </div>
+
+  <script>
+    // Fungsi bantuan untuk mencipta kunci yang konsisten daripada nama sekolah
+    const sanitizeSchoolName = (name) => name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    // It's better to wrap the form in a <form> tag and listen for the 'submit' event.
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      // Prevent the default form submission
+      event.preventDefault(); 
+
+      const nama = document.getElementById('nama').value.trim();
+      const sekolah = document.getElementById('sekolah').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!nama || !sekolah || !password) {
+        alert("Sila isi semua maklumat.");
+        return;
+      }
+
+      // Dapatkan senarai pengguna dari localStorage
+      const users = JSON.parse(localStorage.getItem('sars_users')) || [];
+
+      // Cari pengguna berdasarkan nama dan sekolah (tidak sensitif huruf)
+      const user = users.find(u => u.nama.toLowerCase() === nama.toLowerCase() && u.sekolah.toLowerCase() === sekolah.toLowerCase());
+
+      // "Hash" kata laluan yang dimasukkan untuk perbandingan
+      const hashedPassword = btoa(password);
+
+      // Semak jika pengguna wujud dan kata laluan sepadan
+      if (user && user.password === hashedPassword) {
+        // PENAMBAHBAIKAN: Simpan semua maklumat pengguna dalam satu objek
+        // Ini lebih selamat dan mengelakkan data ditulis ganti secara tidak sengaja
+        const currentUser = {
+            nama: user.nama,
+            sekolah: user.sekolah,
+            peranan: user.peranan,
+            sekolah_key: sanitizeSchoolName(user.sekolah)
+        };
+        localStorage.setItem('sars_currentUser', JSON.stringify(currentUser));
+
+        if (user.peranan === 'guru') {
+          window.location.href = "(SARS)-Guru.html";
+        } else {
+          window.location.href = "(SARS)-PELAJAR.html";
+        }
+      } else {
+        alert('Nama, sekolah, atau kata laluan tidak sah. Sila cuba lagi atau daftar jika anda pengguna baru.');
+      }
+    });
+
+    // Fungsi untuk tunjuk/sembunyi kata laluan
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    togglePassword.addEventListener('click', function () {
+        // Tukar jenis atribut input
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Tukar ikon mata
+        const icon = this.querySelector('i');
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
+  </script>
+
+</body>
+</html>

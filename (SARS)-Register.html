@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Akaun SARS</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #ffb7b2;
+            --card-bg: #fadadd;
+            --text-color: #3b3426;
+            --input-border: #ddd;
+            --accent-color: #2c7be5;
+            --accent-hover: #1a5edb;
+            --danger-color: #ef4444;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .register-container {
+            background: var(--card-bg);
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .lead {
+            text-align: center;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        .form-group { margin-bottom: 15px; }
+        label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="text"], input[type="password"], select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff; /* Ensure select has a background */
+            color: var(--text-color);
+        }
+        select:invalid {
+            color: #888;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(44, 123, 229, 0.2);
+        }
+        .password-wrapper { position: relative; }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #888;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover { background: var(--accent-hover); }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+        .login-link a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .login-link a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>Daftar Akaun</h1>
+        <p class="lead">Sertai Sistem Aduan Rakyat Sekolah (SARS) hari ini.</p>
+        <form id="registerForm" novalidate>
+            <div class="form-group">
+                <label for="nama">Nama Penuh</label>
+                <input type="text" id="nama" placeholder="Contoh: Ali bin Abu" required>
+            </div>
+            <div class="form-group">
+                <label for="sekolah">Nama Sekolah</label>
+                <input type="text" id="sekolah" placeholder="Contoh: SMK Taman Indah" required>
+            </div>
+            <div class="form-group">
+                <label for="peranan">Saya adalah seorang</label>
+                <select id="peranan" required>
+                    <option value="" disabled selected>-- Sila Pilih Peranan --</option>
+                    <option value="pelajar">Pelajar</option>
+                    <option value="guru">Guru</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Kata Laluan</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Min. 8 aksara" required minlength="8">
+                    <button type="button" class="toggle-password" id="togglePassword"><i class="fa fa-eye"></i></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password2">Sahkan Kata Laluan</label>
+                <input type="password" id="password2" placeholder="Taip semula kata laluan" required>
+            </div>
+            <button type="submit" class="btn-submit">Daftar</button>
+        </form>
+        <p class="login-link">Sudah ada akaun? <a href="Sistem Aduan Rakyat Sekolah (SARS) log in.html">Log Masuk</a></p>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+
+        // Tunjuk/Sembunyi Kata Laluan
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Hantar Borang
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const sekolah = document.getElementById('sekolah').value.trim();
+            const peranan = document.getElementById('peranan').value;
+            const password = passwordInput.value;
+            const password2 = document.getElementById('password2').value;
+
+            // Pengesahan
+            if (!nama || !sekolah || !peranan || !password || !password2) {
+                alert('Sila isi semua medan.');
+                return;
+            }
+            if (password.length < 8) {
+                alert('Kata laluan mesti sekurang-kurangnya 8 aksara.');
+                return;
+            }
+            if (password !== password2) {
+                alert('Kata laluan tidak sepadan.');
+                return;
+            }
+
+            // Dapatkan senarai pengguna sedia ada dari localStorage
+            const users = JSON.parse(localStorage.getItem('sars_users')) || [];
+
+            // Semak jika pengguna sudah wujud (berdasarkan nama dan sekolah)
+            const userExists = users.some(user => user.nama.toLowerCase() === nama.toLowerCase() && user.sekolah.toLowerCase() === sekolah.toLowerCase());
+
+            if (userExists) {
+                alert('Pengguna dengan nama dan sekolah yang sama sudah wujud. Sila log masuk.');
+                return;
+            }
+
+            // "Hash" kata laluan (menggunakan Base64, sama seperti di laman log masuk)
+            const hashedPassword = btoa(password);
+
+            // Tambah pengguna baru ke dalam senarai
+            users.push({
+                nama: nama,
+                sekolah: sekolah,
+                password: hashedPassword,
+                peranan: peranan
+            });
+
+            // Simpan senarai pengguna yang telah dikemaskini ke localStorage
+            localStorage.setItem('sars_users', JSON.stringify(users));
+
+            alert(`Pendaftaran berjaya untuk ${nama}!\nAnda akan dihalakan ke laman log masuk.`);
+
+            // Halakan ke laman log masuk
+            window.location.href = 'Sistem Aduan Rakyat Sekolah (SARS) log in.html';
+        });
+    </script>
+</body>
+</html>

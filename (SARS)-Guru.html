@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(SARS)-Guru</title>
+    <!-- Memuatkan ikon dari Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Gaya Asas untuk keseluruhan halaman */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background-color: #ffdfb9;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ================== BAHAGIAN SIDEBAR ================== */
+        .sidebar {
+            height: 100vh;
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0; /* Sidebar sentiasa kelihatan */
+            background-color: #a4193d;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            transition: left 0.3s ease; /* Animasi buka/tutup */
+            z-index: 1001;
+        }
+
+        /* Bahagian Profil di dalam Sidebar */
+        .profile-container {
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Gambar Profil */
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover; /* Memastikan gambar sentiasa muat */
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+        .profile-pic:hover {
+            opacity: 0.8;
+        }
+
+        /* Input untuk muat naik fail (tersembunyi) */
+        #profileUpload {
+            display: none;
+        }
+
+        /* Nama Pengguna */
+        #userName {
+            margin: 10px 0 0 0;
+            font-weight: 600;
+        }
+
+        /* Pautan Menu di Sidebar */
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        /* ================== BAHAGIAN UTAMA ================== */
+        /* Butang untuk buka/tutup Sidebar */
+
+        /* Kawasan Kandungan Utama */
+        .content {
+            padding: 20px;
+            margin-left: 220px; /* Anjakkan kandungan untuk beri ruang pada sidebar */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Keadaan Aktif untuk Sidebar dan Kandungan */
+
+        /* Bekas untuk kad-kad pilihan */
+        .pilihan-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding-top: 40px;
+            max-width: 1200px;
+        }
+
+        /* Gaya untuk setiap kad */
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .card-icon {
+            font-size: 60px;
+            color: #a4193d;
+            margin-bottom: 15px;
+        }
+        .card h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 10px 0;
+        }
+        .card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bahagian Sidebar (Menu Tepi) -->
+    <div class="sidebar" id="sidebar">
+        <div class="profile-container">
+            <label for="profileUpload">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg" alt="Gambar Profil" class="profile-pic" id="profilePic">
+            </label>
+            <input type="file" id="profileUpload" accept="image/*">
+            <h3 id="userName">Nama Guru</h3>
+        </div>
+        <a href="#"><i class="fas fa-building-columns fa-fw"></i> Informasi Sekolah</a>
+        <a href="#"><i class="fas fa-chalkboard-user fa-fw"></i> Informasi Kelas</a>
+    </div>
+
+    <!-- Bahagian Kandungan Utama -->
+    <div class="content" id="content">
+        <div class="pilihan-container">
+            <div class="card">
+                <a href="(SARS)-Guru-Aduan.html">
+                    <i class="fas fa-envelope-open-text card-icon"></i>
+                    <h1>Peti Masuk Aduan</h1>
+                    <p>Lihat dan uruskan semua aduan yang diterima daripada pelajar.</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="(SARS)-Guru-Kaunseling.html">
+                    <i class="fas fa-calendar-check card-icon"></i>
+                    <h1>Jadual Kaunseling</h1>
+                    <p>Semak dan sahkan permohonan temujanji kaunseling daripada pelajar.</p>
+                </a>
+            </div>
+            <div class="card">
+                <a href="(SARS)-Guru-CadanagnPelajar.html">
+                    <i class="fas fa-lightbulb card-icon"></i>
+                    <h1>Cadangan Pelajar</h1>
+                    <p>Baca cadangan dan idea penambahbaikan yang dihantar oleh pelajar.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================== FUNGSI JAVASCRIPT ==================
+
+        // Fungsi ini akan berjalan sebaik sahaja semua elemen HTML dimuatkan
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dapatkan elemen-elemen yang diperlukan
+            const profilePic = document.getElementById('profilePic');
+            const profileUpload = document.getElementById('profileUpload');
+            const userNameElement = document.getElementById('userName');
+
+            // PENAMBAHBAIKAN: Muat naik data dari objek 'currentUser'
+            const currentUser = JSON.parse(localStorage.getItem('sars_currentUser'));
+            if (currentUser) {
+                userNameElement.textContent = currentUser.nama;
+
+                // Cipta kunci unik untuk gambar profil
+                const userKey = `profileImage_${currentUser.nama.replace(/\s/g, '_').toLowerCase()}_${currentUser.sekolah.replace(/\s/g, '_').toLowerCase()}`;
+                setupProfilePicture(userKey);
+            }
+
+            // Fungsi untuk memuat naik dan menyimpan gambar
+            function setupProfilePicture(userKey) {
+                // Muat naik gambar profil dari localStorage menggunakan kunci unik
+                const savedImage = localStorage.getItem(userKey);
+                if (savedImage) {
+                    profilePic.src = savedImage;
+                }
+
+                // Apabila gambar profil diklik, buka pilihan fail
+                profileUpload.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            profilePic.src = e.target.result;
+                            // Simpan gambar menggunakan kunci unik
+                            localStorage.setItem(userKey, e.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
